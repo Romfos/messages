@@ -1,11 +1,10 @@
-using System;
-using System.Collections.Generic;
 
 // ------------------------------------------------------------------------------
 // This code was generated based on the Cucumber JSON schema
 // Changes to this file may cause incorrect behavior and will be lost if 
 // the code is regenerated.
 // ------------------------------------------------------------------------------
+using System.Collections.Immutable;
 
 namespace Io.Cucumber.Messages.Types;
 
@@ -14,50 +13,15 @@ namespace Io.Cucumber.Messages.Types;
  * @see <a href="https://github.com/cucumber/messages" >Github - Cucumber - Messages</a>
  */
 
-public sealed class PickleTableRow 
+public sealed record PickleTableRow 
 {
-    public List<PickleTableCell> Cells { get; private set; }
+    public ImmutableArray<PickleTableCell> Cells { get; }
 
 
     public PickleTableRow(
-        List<PickleTableCell> cells
+        ImmutableArray<PickleTableCell> cells
     ) 
     {
-        RequireNonNull<List<PickleTableCell>>(cells, "Cells", "PickleTableRow.Cells cannot be null");
-        this.Cells = new List<PickleTableCell>(cells);        
-    }
-
-    public override bool Equals(Object o) 
-    {
-        if (this == o) return true;
-        if (o == null || this.GetType() != o.GetType()) return false;
-        PickleTableRow that = (PickleTableRow) o;
-        return 
-            Cells.Equals(that.Cells);        
-    }
-
-    public override int GetHashCode() 
-    {
-        int hash = 17;
-        if (Cells != null)
-          hash = hash * 31 + Cells.GetHashCode();
-        return hash;
-    }
-
-    public override string ToString() 
-    {
-        return "PickleTableRow{" +
-            "cells=" + Cells +
-            '}';
-    }
-
-    private static T Require<T>(T property, string propertyName, string errorMessage)
-    {
-      RequireNonNull<T>(property, propertyName, errorMessage);
-      return property;
-    }
-    private static void RequireNonNull<T>(T property, string propertyName, string errorMessage) 
-    {
-      if (property == null) throw new ArgumentNullException(propertyName, errorMessage);
+        Cells = cells;
     }
 }

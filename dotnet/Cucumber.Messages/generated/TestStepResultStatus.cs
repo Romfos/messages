@@ -1,4 +1,3 @@
-using System;
 using System.ComponentModel;
 using System.Reflection;
 
@@ -10,7 +9,8 @@ namespace Io.Cucumber.Messages.Types;
 // the code is regenerated.
 // ------------------------------------------------------------------------------
 
-public enum TestStepResultStatus {
+public enum TestStepResultStatus 
+{
 
     [Description("UNKNOWN")]
     UNKNOWN,
@@ -36,8 +36,9 @@ public enum TestStepResultStatus {
 
 public static class TestStepResultStatusExtensions
 {
-    public static string Value(this TestStepResultStatus v) {
-        var attribute = v.GetType().GetField(v.ToString()).GetCustomAttribute<DescriptionAttribute>();
+    public static string Value(this TestStepResultStatus v)
+    {
+        var attribute = v.GetType().GetField(v.ToString())?.GetCustomAttribute<DescriptionAttribute>();
         return attribute == null ? v.ToString() : attribute.Description; 
     }
 }

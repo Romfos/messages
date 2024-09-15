@@ -1,11 +1,10 @@
-using System;
-using System.Collections.Generic;
 
 // ------------------------------------------------------------------------------
 // This code was generated based on the Cucumber JSON schema
 // Changes to this file may cause incorrect behavior and will be lost if 
 // the code is regenerated.
 // ------------------------------------------------------------------------------
+using System.Collections.Immutable;
 
 namespace Io.Cucumber.Messages.Types;
 
@@ -17,18 +16,18 @@ namespace Io.Cucumber.Messages.Types;
  * [Location](#io.cucumber.messages.Location) within that file.
  */
 
-public sealed class SourceReference 
+public sealed record SourceReference 
 {
-    public string Uri { get; private set; }
-    public JavaMethod JavaMethod { get; private set; }
-    public JavaStackTraceElement JavaStackTraceElement { get; private set; }
-    public Location Location { get; private set; }
+    public string? Uri { get; }
+    public JavaMethod? JavaMethod { get; }
+    public JavaStackTraceElement? JavaStackTraceElement { get; }
+    public Location? Location { get; }
 
 
     public static SourceReference Create(string uri) 
     {
         return new SourceReference(
-            Require<string>(uri, "Uri", "SourceReference.Uri cannot be null"),
+            uri ?? throw new ArgumentNullException("Uri", "SourceReference.Uri cannot be null"),
             null,
             null,
             null
@@ -39,7 +38,7 @@ public sealed class SourceReference
     {
         return new SourceReference(
             null,
-            Require<JavaMethod>(javaMethod, "JavaMethod", "SourceReference.JavaMethod cannot be null"),
+            javaMethod ?? throw new ArgumentNullException("JavaMethod", "SourceReference.JavaMethod cannot be null"),
             null,
             null
         );
@@ -50,7 +49,7 @@ public sealed class SourceReference
         return new SourceReference(
             null,
             null,
-            Require<JavaStackTraceElement>(javaStackTraceElement, "JavaStackTraceElement", "SourceReference.JavaStackTraceElement cannot be null"),
+            javaStackTraceElement ?? throw new ArgumentNullException("JavaStackTraceElement", "SourceReference.JavaStackTraceElement cannot be null"),
             null
         );
     }
@@ -61,66 +60,20 @@ public sealed class SourceReference
             null,
             null,
             null,
-            Require<Location>(location, "Location", "SourceReference.Location cannot be null")
+            location ?? throw new ArgumentNullException("Location", "SourceReference.Location cannot be null")
         );
     }
 
     public SourceReference(
-        string uri,
-        JavaMethod javaMethod,
-        JavaStackTraceElement javaStackTraceElement,
-        Location location
+        string? uri,
+        JavaMethod? javaMethod,
+        JavaStackTraceElement? javaStackTraceElement,
+        Location? location
     ) 
     {
-        this.Uri = uri;
-        this.JavaMethod = javaMethod;
-        this.JavaStackTraceElement = javaStackTraceElement;
-        this.Location = location;
-    }
-
-    public override bool Equals(Object o) 
-    {
-        if (this == o) return true;
-        if (o == null || this.GetType() != o.GetType()) return false;
-        SourceReference that = (SourceReference) o;
-        return 
-            Object.Equals(Uri, that.Uri) &&         
-            Object.Equals(JavaMethod, that.JavaMethod) &&         
-            Object.Equals(JavaStackTraceElement, that.JavaStackTraceElement) &&         
-            Object.Equals(Location, that.Location);        
-    }
-
-    public override int GetHashCode() 
-    {
-        int hash = 17;
-        if (Uri != null)
-          hash = hash * 31 + Uri.GetHashCode();
-        if (JavaMethod != null)
-          hash = hash * 31 + JavaMethod.GetHashCode();
-        if (JavaStackTraceElement != null)
-          hash = hash * 31 + JavaStackTraceElement.GetHashCode();
-        if (Location != null)
-          hash = hash * 31 + Location.GetHashCode();
-        return hash;
-    }
-
-    public override string ToString() 
-    {
-        return "SourceReference{" +
-            "uri=" + Uri +
-            ", javaMethod=" + JavaMethod +
-            ", javaStackTraceElement=" + JavaStackTraceElement +
-            ", location=" + Location +
-            '}';
-    }
-
-    private static T Require<T>(T property, string propertyName, string errorMessage)
-    {
-      RequireNonNull<T>(property, propertyName, errorMessage);
-      return property;
-    }
-    private static void RequireNonNull<T>(T property, string propertyName, string errorMessage) 
-    {
-      if (property == null) throw new ArgumentNullException(propertyName, errorMessage);
+        Uri = uri;
+        JavaMethod = javaMethod;
+        JavaStackTraceElement = javaStackTraceElement;
+        Location = location;
     }
 }

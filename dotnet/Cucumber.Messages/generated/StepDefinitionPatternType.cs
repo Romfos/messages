@@ -1,4 +1,3 @@
-using System;
 using System.ComponentModel;
 using System.Reflection;
 
@@ -10,7 +9,8 @@ namespace Io.Cucumber.Messages.Types;
 // the code is regenerated.
 // ------------------------------------------------------------------------------
 
-public enum StepDefinitionPatternType {
+public enum StepDefinitionPatternType 
+{
 
     [Description("CUCUMBER_EXPRESSION")]
     CUCUMBER_EXPRESSION,
@@ -21,8 +21,9 @@ public enum StepDefinitionPatternType {
 
 public static class StepDefinitionPatternTypeExtensions
 {
-    public static string Value(this StepDefinitionPatternType v) {
-        var attribute = v.GetType().GetField(v.ToString()).GetCustomAttribute<DescriptionAttribute>();
+    public static string Value(this StepDefinitionPatternType v)
+    {
+        var attribute = v.GetType().GetField(v.ToString())?.GetCustomAttribute<DescriptionAttribute>();
         return attribute == null ? v.ToString() : attribute.Description; 
     }
 }
